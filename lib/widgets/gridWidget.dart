@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'details_sreen.dart';
 
 Widget GridWidget(
-  List<String> listOfImages,
   List<String> listOfText,
 ) {
   return GridView.builder(
-      itemCount: listOfImages.length,
+      itemCount: listOfText.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
+          crossAxisCount: 3, crossAxisSpacing: 5, mainAxisSpacing: 1),
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
@@ -25,21 +24,21 @@ Widget GridWidget(
             children: [
               Container(
                 width: double.infinity,
-                height: 190,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(listOfImages[index]),
-                    fit: BoxFit.cover,
-                  ),
-                  color: Colors.lightBlue,
+                height: 120,
+                decoration:  BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              Text(
-                listOfText[index],
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: Text(
+                      listOfText[index].replaceAll(RegExp('/'), ' ').toUpperCase(),
+                      style: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

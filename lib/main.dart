@@ -36,7 +36,7 @@ class _MainWidgetState extends State<MainWidget> {
         list.add(k);
       } else {
         for (var i = 0; i < v.length; i++) {
-          list.add(k + " " + v[i]);
+          list.add(k + "/" + v[i]);
         }
       }
     });
@@ -44,24 +44,11 @@ class _MainWidgetState extends State<MainWidget> {
     return list;
   }
 
-  Future getImageData() async {
-    String link = "https://dog.ceo/api/breed/hound/images";
-    var res = await http.get(Uri.parse(link));
-    // print(res.body);
-    var data = json.decode(res.body);
-    //print(data);
-    var rest = (data["message"] as List).map((item) => item as String).toList();
-    // print(rest.runtimeType);
-    listImage.addAll(rest);
-    print(listImage);
-    return listImage;
-  }
 
   @override
   void initState() {
     super.initState();
     getData();
-    getImageData();
   }
 
   @override
@@ -70,10 +57,10 @@ class _MainWidgetState extends State<MainWidget> {
       home: SafeArea(
         child: Scaffold(
           body: FutureBuilder(
-              future: Future.wait([getImageData(), getData()]),
-              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+              future: getData(),
+              builder: (context, snapshot) {
                 return snapshot.data != null
-                    ? GridWidget(snapshot.data![0], snapshot.data![1])
+                    ? GridWidget(snapshot.data!)
                     : const Center(child: CircularProgressIndicator());
               }),
         ),
