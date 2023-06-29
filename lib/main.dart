@@ -7,21 +7,21 @@ import 'package:http/http.dart' as http;
 
 void main() {
   runApp(
-    MainWinget(),
+    const MainWidget(),
   );
 }
 
-class MainWinget extends StatefulWidget {
-  MainWinget({super.key});
+class MainWidget extends StatefulWidget {
+  const MainWidget({super.key});
 
   @override
-  State<MainWinget> createState() => _MainWingetState();
+  State<MainWidget> createState() => _MainWidgetState();
 }
 
 var list = <String>[];
 var listImage = <String>[];
 
-class _MainWingetState extends State<MainWinget> {
+class _MainWidgetState extends State<MainWidget> {
   Future getData() async {
     String link = "https://dog.ceo/api/breeds/list/all";
     var res = await http.get(Uri.parse(link));
@@ -51,7 +51,6 @@ class _MainWingetState extends State<MainWinget> {
     var data = json.decode(res.body);
     //print(data);
     var rest = (data["message"] as List).map((item) => item as String).toList();
-    ;
     // print(rest.runtimeType);
     listImage.addAll(rest);
     print(listImage);
@@ -75,7 +74,7 @@ class _MainWingetState extends State<MainWinget> {
               builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                 return snapshot.data != null
                     ? GridWidget(snapshot.data![0], snapshot.data![1])
-                    : Center(child: CircularProgressIndicator());
+                    : const Center(child: CircularProgressIndicator());
               }),
         ),
       ),
