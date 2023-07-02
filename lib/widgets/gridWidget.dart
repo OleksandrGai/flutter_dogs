@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dogs/dogs.dart';
 
 import 'details_sreen.dart';
 
-Widget GridWidget(
-  List<String> listOfText,
+
+//TODO: convert function to class
+Widget gridWidget(
+  List<Dog> listOfText,
 ) {
   return GridView.builder(
       itemCount: listOfText.length,
@@ -25,7 +28,7 @@ Widget GridWidget(
               Container(
                 width: double.infinity,
                 height: 120,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -33,9 +36,11 @@ Widget GridWidget(
                   child: Padding(
                     padding: const EdgeInsets.all(1),
                     child: Text(
-                      listOfText[index].replaceAll(RegExp('/'), ' ').toUpperCase(),
-                      style: const TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold),
+                      listOfText[index].fullBreed,
+                      //listOfText[index]
+                      //.replaceAll(RegExp('/'), ' ').toUpperCase(),
+                      // style: const TextStyle(
+                      //     fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

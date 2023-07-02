@@ -3,14 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../dogs.dart';
+
 class DogImages extends StatelessWidget {
   const DogImages({super.key, required this.breed, this.count = 10});
 
-  final String breed;
+  final Dog breed;
   final int count;
 
   Future<List<String>> _dogImages() async {
-    final String link = "https://dog.ceo/api/breed/$breed/images/random/$count";
+    final String link = "https://dog.ceo/api/breed/${breed.imageUrlPath}/images/random/$count";
     final request = await http.get(Uri.parse(link));
     final data = jsonDecode(request.body);
     return (data["message"] as List)
