@@ -1,32 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dogs/dogs.dart';
 
-Widget GridWidget(
-  List<String> listOfImages,
-  List<String> listOfText,
+import 'details_sreen.dart';
+
+
+//TODO: convert function to class
+Widget gridWidget(
+  List<Dog> listOfText,
 ) {
   return GridView.builder(
-      itemCount: listOfImages.length,
+      itemCount: listOfText.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
+          crossAxisCount: 3, crossAxisSpacing: 5, mainAxisSpacing: 1),
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 190,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(listOfImages[index]),
-                  fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return DogImages(
+                  breed: listOfText[index],
+                );
+              }),
+            );
+          },
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                color: Colors.lightBlue,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: Text(
+                      listOfText[index].fullBreed,
+                      //listOfText[index]
+                      //.replaceAll(RegExp('/'), ' ').toUpperCase(),
+                      // style: const TextStyle(
+                      //     fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            Text(listOfText[index],style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
-          ],
+            ],
+          ),
         );
       });
 }
