@@ -1,32 +1,24 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-import '../dogs.dart';
+import '../data from the internet/dogs_image_data.dart';
+import '../Model/dogs.dart';
 
 class DogImages extends StatelessWidget {
-  const DogImages({super.key, required this.breed, this.count = 10});
+  const DogImages({
+    super.key,
+    required this.breed,
+    this.count = 10,
+  });
 
   final Dog breed;
   final int count;
-
-  Future<List<String>> _dogImages() async {
-    final String link =
-        "https://dog.ceo/api/breed/${breed.imageUrlPath}/images/random/$count";
-    final request = await http.get(Uri.parse(link));
-    final data = jsonDecode(request.body);
-    return (data["message"] as List)
-        .map((element) => element as String)
-        .toList();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
-          future: _dogImages(),
+          future: dogImages(breed, 10),
           builder: (context, snapshot) {
             return snapshot.data != null
                 ? ListView.builder(

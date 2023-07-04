@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dogs/dogs.dart';
+import 'package:flutter_dogs/Model/dogs.dart';
 
 import '../screens/info_about_dog_screen.dart';
 
