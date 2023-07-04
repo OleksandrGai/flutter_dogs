@@ -12,7 +12,8 @@ class DogImages extends StatelessWidget {
   final int count;
 
   Future<List<String>> _dogImages() async {
-    final String link = "https://dog.ceo/api/breed/${breed.imageUrlPath}/images/random/$count";
+    final String link =
+        "https://dog.ceo/api/breed/${breed.imageUrlPath}/images/random/$count";
     final request = await http.get(Uri.parse(link));
     final data = jsonDecode(request.body);
     return (data["message"] as List)
@@ -44,7 +45,10 @@ class DogImages extends StatelessWidget {
                               padding: const EdgeInsets.all(3),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(snapshot.data![index], fit: BoxFit.fitWidth,)),
+                                  child: Image.network(
+                                    snapshot.data![index],
+                                    fit: BoxFit.fitWidth,
+                                  )),
                             )),
                       );
                     })
