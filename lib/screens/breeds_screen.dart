@@ -17,7 +17,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
       home: SafeArea(
         child: Scaffold(
           body: FutureBuilder(
-              future: getData(),
+              future: breedsTypeData(),
               builder: (context, snapshot) {
                 return snapshot.data != null
                     ? GridTextWidget(listOfBreeds: snapshot.data!)

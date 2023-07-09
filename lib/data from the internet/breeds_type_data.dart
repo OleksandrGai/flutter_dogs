@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_dogs/dogs.dart';
+import 'package:flutter_dogs/Model/dogs.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<Dog>> getData() async {
+Future<List<Dog>> breedsTypeData() async {
   final dogs = <Dog>[];
   String link = "https://dog.ceo/api/breeds/list/all";
   final response = await http.get(Uri.parse(link));

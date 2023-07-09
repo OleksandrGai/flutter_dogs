@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 //ToDO: Data Transfer Object DTO or Model
 class Dog {
   Dog({
