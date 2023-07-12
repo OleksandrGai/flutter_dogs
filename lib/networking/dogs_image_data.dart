@@ -8,6 +8,5 @@ Future<List<String>> dogImages(Dog breed, int count) async {
       "https://dog.ceo/api/breed/${breed.imageUrlPath}/images/random/$count";
   final request = await http.get(Uri.parse(link));
   final data = jsonDecode(request.body);
-  print((data["message"] as List).map((element) => element as String).toList());
   return (data["message"] as List).map((element) => element as String).toList();
 }

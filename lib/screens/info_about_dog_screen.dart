@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data from the internet/dogs_image_data.dart';
+import '../networking/dogs_image_data.dart';
 import '../Model/dogs.dart';
 
 class DogImages extends StatelessWidget {

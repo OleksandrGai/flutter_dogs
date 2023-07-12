@@ -1,4 +1,3 @@
-//ToDO: Data Transfer Object DTO or Model
 class Dog {
   Dog({
     required this.breed,
@@ -8,7 +7,9 @@ class Dog {
   final String breed;
   final String? subBreed;
 
-  String get fullBreed => '${(subBreed) ?? ''} $breed'.trim();
+  String get fullBreed =>
+      '${(subBreed) ?? ''} ${breed?[0].toUpperCase()}${breed?.substring(1)}'
+          .trim();
 
   String get imageUrlPath => subBreed == null ? breed : '$breed/$subBreed';
 }

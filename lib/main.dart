@@ -8,4 +8,3 @@ void main() {
   );
 }
 
-//ToDo: move it to separate file and rename it

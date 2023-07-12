@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dogs/widgets/gridWidget.dart';
 
-import '../data from the internet/breeds_type_data.dart';
+import '../networking/breeds_type_data.dart';
 
 class BreedsScreen extends StatefulWidget {
   const BreedsScreen({super.key});
