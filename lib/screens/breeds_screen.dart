@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_dogs/widgets/gridWidget.dart';
+import 'package:provider/provider.dart';
 
-import '../data from the internet/breeds_type_data.dart';
+import '../view_model/dogs_breed_notifier.dart';
 
-class BreedsScreen extends StatefulWidget {
+class BreedsScreen extends StatelessWidget {
   const BreedsScreen({super.key});
 
   @override
-  State<BreedsScreen> createState() => _BreedsScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<DogsBreedNotifier>(
+      create: (context) => DogsBreedNotifier(),
+      child: const DogBreedsView(),
+    );
+  }
 }
 
-class _BreedsScreenState extends State<BreedsScreen> {
+class DogBreedsView extends StatelessWidget {
+  const DogBreedsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(
-          body: FutureBuilder(
-              future: breedsTypeData(),
-              builder: (context, snapshot) {
-                return snapshot.data != null
-                    ? GridTextWidget(listOfBreeds: snapshot.data!)
-                    : const Center(child: CircularProgressIndicator());
-              }),
-        ),
+            body: Consumer<DogsBreedNotifier>(builder: (context, value, child) {
+          return value.dogBreeds.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : GridTextWidget(listOfBreeds: value.dogBreeds);
+        })),
       ),
     );
   }
