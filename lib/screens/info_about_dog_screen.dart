@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../data from the internet/dogs_image_data.dart';
-import '../Model/dogs.dart';
+import '../model/dogs.dart';
+
+import '../view_model/dog_images_notifier.dart';
 
 class DogImages extends StatelessWidget {
   const DogImages({
@@ -15,38 +17,49 @@ class DogImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<DogImagesNotifier>(
+      create: (_) => DogImagesNotifier(breed, count),
+      child: const DogImagesView(),
+    );
+  }
+}
+
+class DogImagesView extends StatelessWidget {
+  const DogImagesView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder(
-          future: dogImages(breed, 10),
-          builder: (context, snapshot) {
-            return snapshot.data != null
-                ? ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                            height: 250,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    snapshot.data![index],
-                                    fit: BoxFit.fitWidth,
-                                  )),
-                            )),
-                      );
-                    })
-                : const Center(child: CircularProgressIndicator());
-          },
-        ),
+        body: Consumer<DogImagesNotifier>(builder: (context, value, child) {
+          return value.dogImagesList.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  itemCount: value.dogImagesList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          height: 250,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  value.dogImagesList[index],
+                                  fit: BoxFit.fitWidth,
+                                )),
+                          )),
+                    );
+                  });
+        }),
       ),
     );
   }
