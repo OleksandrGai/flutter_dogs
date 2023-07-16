@@ -11,7 +11,9 @@ class BreedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DogsBreedNotifier>(
-      create: (context) => DogsBreedNotifier(),
+      create: (context) {
+        return DogsBreedNotifier();
+      },
       child: const DogBreedsView(),
     );
   }
@@ -27,7 +29,9 @@ class DogBreedsView extends StatelessWidget {
         child: Scaffold(
             body: Consumer<DogsBreedNotifier>(builder: (context, value, child) {
           return value.dogBreeds.isEmpty
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
               : GridTextWidget(listOfBreeds: value.dogBreeds);
         })),
       ),
