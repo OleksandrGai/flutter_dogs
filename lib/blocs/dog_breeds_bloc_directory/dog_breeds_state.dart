@@ -4,8 +4,6 @@ class DogBreedsState {}
 
 class DogBreedsInitial extends DogBreedsState {}
 
-class DogBreedsLoading extends DogBreedsState {}
-
 class DogBreedsLoaded extends DogBreedsState {
   DogBreedsLoaded(this.dogBreedsList);
 
