@@ -7,5 +7,3 @@ void main() {
     const BreedsScreen(),
   );
 }
-
-//ToDo: move it to separate file and rename it

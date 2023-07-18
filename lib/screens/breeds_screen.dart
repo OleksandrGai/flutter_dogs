@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dogs/blocs/dog_breeds_bloc_directory/dog_breeds_bloc.dart';
 
 import 'package:flutter_dogs/widgets/gridWidget.dart';
-import 'package:provider/provider.dart';
-
-import '../view_model/dogs_breed_notifier.dart';
 
 class BreedsScreen extends StatelessWidget {
   const BreedsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DogsBreedNotifier>(
-      create: (context) => DogsBreedNotifier(),
+    return BlocProvider(
+      create: (context) => DogBreedsBloc(),
       child: const DogBreedsView(),
     );
   }
@@ -25,11 +24,15 @@ class DogBreedsView extends StatelessWidget {
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(
-            body: Consumer<DogsBreedNotifier>(builder: (context, value, child) {
-          return value.dogBreeds.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : GridTextWidget(listOfBreeds: value.dogBreeds);
-        })),
+          body: BlocBuilder<DogBreedsBloc, DogBreedsState>(
+            builder: (context, state) {
+              if (state is DogBreedsLoaded) {
+                return GridTextWidget(listOfBreeds: state.dogBreedsList);
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
       ),
     );
   }
