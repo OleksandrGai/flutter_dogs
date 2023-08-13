@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dogs/networking/dogs_api.dart';
 import 'package:provider/provider.dart';
 
 import '../model/dogs.dart';
@@ -18,7 +19,7 @@ class DogImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DogImagesNotifier>(
-      create: (_) => DogImagesNotifier(breed, count),
+      create: (_) => DogImagesNotifier(DogsApi(), breed, count),
       child: const DogImagesView(),
     );
   }

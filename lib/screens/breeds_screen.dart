@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dogs/db/dogs_db.dart';
+import 'package:flutter_dogs/networking/dogs_api.dart';
 
 import 'package:flutter_dogs/widgets/gridWidget.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,7 @@ class BreedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DogsBreedNotifier>(
-      create: (context) => DogsBreedNotifier(),
+      create: (context) => DogsBreedNotifier(DogsApi(), DogsDb()),
       child: const DogBreedsView(),
     );
   }
