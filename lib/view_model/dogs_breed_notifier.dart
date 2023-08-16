@@ -8,32 +8,10 @@ class DogsBreedNotifier extends ChangeNotifier {
   final List<Dog> dogBreeds = [];
 
   DogsBreedNotifier() {
-    breedsTypeData().then((value) {
+    putDogsInDB();
+    DBProvider.db.getAllDogs().then((value) {
       dogBreeds.addAll(value);
-      notifyListeners();
     });
+    notifyListeners();
   }
 }
-
-/*
-class DogsBreedNotifier extends ChangeNotifier {
-   List<Dog> dogBreeds = [];
-  DogRepository _dogRepository = DogRepository();
-
-  DogsBreedNotifier() {
-    // breedsTypeData().then((value) {
-    //   dogBreeds.addAll(value);
-    //   notifyListeners();
-    // });
-    getDogs();
-  }
-  void getDogs(){
-    print("getdogs inside provider");
-    _dogRepository.breedsTypeData().then((value) {
-      dogBreeds = value;
-      notifyListeners();
-    });
-  }
-}
-
- */

@@ -1,51 +1,52 @@
 import 'dart:io';
 
 import 'package:flutter_dogs/model/dogs.dart';
+import 'package:flutter_dogs/networking/breeds_type_data.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:sqflite/sqflite.dart';
 
-class DogDatabaseProvider {
-  static final DogDatabaseProvider db = DogDatabaseProvider._();
-  Database? _database;
+class DBProvider {
+  DBProvider._();
 
-  DogDatabaseProvider._();
+  static final DBProvider db = DBProvider._();
+  static Database? _database;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await getDataBaseInstance();
-
+    _database = await initDB();
     return _database!;
   }
 
-  Future<Database> getDataBaseInstance() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'dog');
-    return openDatabase(path, version: 1,
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, 'doggie_database.db');
+    return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-      await db.execute('''
-CREATE TABLE $dogTable (
-id INTEGER PRIMARY KEY,
-breed TEXT,
-subBreed TEXT,
-)
-''');
+      await db.execute(
+          'CREATE TABLE ${DogFieldsHelper.tableName}(id INTEGER PRIMARY KEY AUTOINCREMENT, breed TEXT, subBreed TEXT)');
     });
+  }
+
+  Future<int> insertALLDog(List<Dog> dogs) async {
+    final db = await database;
+    int result = 0;
+    for (var dog in dogs) {
+      result = await db.insert(DogFieldsHelper.tableName, dog.toMap());
+    }
+    return result;
   }
 
   Future<List<Dog>> getAllDogs() async {
     final db = await database;
-    var response = await db.query(dogTable);
-    List<Dog> list = response.map((dog) => Dog.fromMap(dog)).toList();
+    var res = await db.query(DogFieldsHelper.tableName);
+    List<Dog> list =
+        res.isNotEmpty ? res.map((e) => Dog.fromMap(e)).toList() : [];
     return list;
   }
-
-  Future<Dog> addDogDataBase(Dog dog) async {
-    final db = await database;
-    var raw = await db.insert(
-      dogTable,
-      dog.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return dog.copy(id: raw);
-  }
+}
+Future<int> putDogsInDB() async {
+  var dog = await breedsTypeData();
+  return await DBProvider.db.insertALLDog(dog);
 }
