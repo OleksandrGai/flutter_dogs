@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -30,12 +31,16 @@ class DogsDb {
   }
 
   Future insertAll(List<Dog> dogs) {
+    print('Start insert: ${DateTime.timestamp()}');
     return _db.then((db) {
       return db.transaction((txn) async {
         return Future.wait([
           for (final dog in dogs)
             _insert(txn, dog)
-        ]);
+        ]).then((value) {
+          print('End insert: ${DateTime.timestamp()}');
+          return value;
+        });
       });
     });
   }

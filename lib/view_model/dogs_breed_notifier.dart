@@ -10,14 +10,13 @@ class DogsBreedNotifier extends ChangeNotifier {
   final DogsDb _db;
 
   DogsBreedNotifier(this._api, this._db) {
-    _db.dogs().then((dogs) {
-      dogBreeds.addAll(dogs);
-      notifyListeners();
+    _api.breedsTypeData().then((value) {
+      return _db.insertAll(value).then((_) {
+        _db.dogs().then((dogs) {
+          dogBreeds.addAll(dogs);
+          notifyListeners();
+        });
+      });
     });
-    // _api.breedsTypeData().then((value) {
-    //   return _db.insertAll(value).then((_) {
-    //
-    //   });
-    // });
   }
 }
